@@ -4,6 +4,8 @@
 || @version 1.7
 || @author Alexander Brevig
 || @contact alexanderbrevig@gmail.com
+|| @Ported to Particle (https://www.particle.io/) by Gustavo Gonnet
+|| @contact gusgonnet@gmail.com
 ||
 || @description
 || | Provide an easy way of making finite state machines
@@ -30,7 +32,7 @@
 #ifndef FINITESTATEMACHINE_H
 #define FINITESTATEMACHINE_H
 
-#include <WProgram.h>
+#include <application.h>
 
 #define NO_ENTER (0)
 #define NO_UPDATE (0)

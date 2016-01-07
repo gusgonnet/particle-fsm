@@ -4,6 +4,8 @@
 || @version 1.7
 || @author Alexander Brevig
 || @contact alexanderbrevig@gmail.com
+|| @Ported to Particle (https://www.particle.io/) by Gustavo Gonnet
+|| @contact gusgonnet@gmail.com
 ||
 || @description
 || | Provide an easy way of making finite state machines
