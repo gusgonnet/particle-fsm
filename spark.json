@@ -2,6 +2,6 @@
   "name": "finite-state-machine",
   "author": "Gustavo Gonnet <gusgonnet@gmail.com>",
   "license": "GNU General Public License, version 2",
-  "version": "1.8",
+  "version": "1.8.0",
   "description": "A simple Finite State Machine Library"
 }
