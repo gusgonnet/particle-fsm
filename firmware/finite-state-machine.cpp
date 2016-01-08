@@ -1,10 +1,12 @@
+#include "finite-state-machine.h"
+
 /*
 ||
-|| @file FiniteStateMachine.cpp
-|| @version 1.7
-|| @author Alexander Brevig
+|| @file finite-state-machine.cpp
+|| @version 1.8
+|| @original author Alexander Brevig
 || @contact alexanderbrevig@gmail.com
-|| @Ported to Particle (https://www.particle.io/) by Gustavo Gonnet
+|| @Ported to Particle by Gustavo Gonnet
 || @contact gusgonnet@gmail.com
 ||
 || @description
@@ -29,95 +31,93 @@
 ||
 */
 
-#include "FiniteStateMachine.h" 
-
 //FINITE STATE
 State::State( void (*updateFunction)() ){
-	userEnter = 0;
-	userUpdate = updateFunction;
-	userExit = 0;
+  userEnter = 0;
+  userUpdate = updateFunction;
+  userExit = 0;
 }
 
 State::State( void (*enterFunction)(), void (*updateFunction)(), void (*exitFunction)() ){
-	userEnter = enterFunction;
-	userUpdate = updateFunction;
-	userExit = exitFunction;
+  userEnter = enterFunction;
+  userUpdate = updateFunction;
+  userExit = exitFunction;
 }
 
 //what to do when entering this state
 void State::enter(){
-	if (userEnter){
-		userEnter();
-	}
+  if (userEnter){
+    userEnter();
+  }
 }
 
 //what to do when this state updates
 void State::update(){
-	if (userUpdate){
-		userUpdate();
-	}
+  if (userUpdate){
+    userUpdate();
+  }
 }
 
 //what to do when exiting this state
 void State::exit(){
-	if (userExit){
-		userExit();
-	}
+  if (userExit){
+    userExit();
+  }
 }
 //END FINITE STATE
 
 
 //FINITE STATE MACHINE
 FiniteStateMachine::FiniteStateMachine(State& current){
-	needToTriggerEnter = true;
-	currentState = nextState = &current;
-	stateChangeTime = 0;
+  needToTriggerEnter = true;
+  currentState = nextState = &current;
+  stateChangeTime = 0;
 }
 
 FiniteStateMachine& FiniteStateMachine::update() {
-	//simulate a transition to the first state
-	//this only happens the first time update is called
-	if (needToTriggerEnter) { 
-		currentState->enter();
-		needToTriggerEnter = false;
-	} else {
-		if (currentState != nextState){
-			immediateTransitionTo(*nextState);
-		}
-		currentState->update();
-	}
-	return *this;
+  //simulate a transition to the first state
+  //this only happens the first time update is called
+  if (needToTriggerEnter) { 
+    currentState->enter();
+    needToTriggerEnter = false;
+  } else {
+    if (currentState != nextState){
+      immediateTransitionTo(*nextState);
+    }
+    currentState->update();
+  }
+  return *this;
 }
 
 FiniteStateMachine& FiniteStateMachine::transitionTo(State& state){
-	nextState = &state;
-	stateChangeTime = millis();
-	return *this;
+  nextState = &state;
+  stateChangeTime = millis();
+  return *this;
 }
 
 FiniteStateMachine& FiniteStateMachine::immediateTransitionTo(State& state){
-	currentState->exit();
-	currentState = nextState = &state;
-	currentState->enter();
-	stateChangeTime = millis();
-	return *this;
+  currentState->exit();
+  currentState = nextState = &state;
+  currentState->enter();
+  stateChangeTime = millis();
+  return *this;
 }
 
 //return the current state
 State& FiniteStateMachine::getCurrentState() {
-	return *currentState;
+  return *currentState;
 }
 
 //check if state is equal to the currentState
 boolean FiniteStateMachine::isInState( State &state ) const {
-	if (&state == currentState) {
-		return true;
-	} else {
-		return false;
-	}
+  if (&state == currentState) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 unsigned long FiniteStateMachine::timeInCurrentState() { 
-	millis() - stateChangeTime; 
+  millis() - stateChangeTime; 
 }
 //END FINITE STATE MACHINE
