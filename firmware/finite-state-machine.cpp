@@ -70,13 +70,13 @@ namespace FiniteStateMachine
 
 
   //FINITE STATE MACHINE
-  FiniteStateMachine::FiniteStateMachine(State& current){
+  FSM::FSM(State& current){
     needToTriggerEnter = true;
     currentState = nextState = &current;
     stateChangeTime = 0;
  }
 
-  FiniteStateMachine& FiniteStateMachine::update() {
+  FSM& FSM::update() {
     //simulate a transition to the first state
     //this only happens the first time update is called
     if (needToTriggerEnter) { 
@@ -91,13 +91,13 @@ namespace FiniteStateMachine
     return *this;
   }
 
-  FiniteStateMachine& FiniteStateMachine::transitionTo(State& state){
+  FSM& FSM::transitionTo(State& state){
     nextState = &state;
     stateChangeTime = millis();
     return *this;
   }
 
-  FiniteStateMachine& FiniteStateMachine::immediateTransitionTo(State& state){
+  FSM& FSM::immediateTransitionTo(State& state){
     currentState->exit();
     currentState = nextState = &state;
     currentState->enter();
@@ -106,12 +106,12 @@ namespace FiniteStateMachine
   }
  
   //return the current state
-  State& FiniteStateMachine::getCurrentState() {
+  State& FSM::getCurrentState() {
     return *currentState;
   }
 
   //check if state is equal to the currentState
-  boolean FiniteStateMachine::isInState( State &state ) const {
+  boolean FSM::isInState( State &state ) const {
     if (&state == currentState) {
       return true;
     } else {
@@ -119,7 +119,7 @@ namespace FiniteStateMachine
     }
   }
 
-  unsigned long FiniteStateMachine::timeInCurrentState() { 
+  unsigned long FSM::timeInCurrentState() { 
     return millis() - stateChangeTime; 
   }
   //END FINITE STATE MACHINE
