@@ -46,14 +46,12 @@ namespace FiniteStateMachine
     public:
       State( void (*updateFunction)() );
       State( void (*enterFunction)(), void (*updateFunction)(), void (*exitFunction)() );
-      //State( byte newId, void (*enterFunction)(), void (*updateFunction)(), void (*exitFunction)() );
     
-      //void getId();
       void enter();
       void update();
       void exit();
+
     private:
-      //byte id;
       void (*userEnter)();
       void (*userUpdate)();
       void (*userExit)();
