@@ -1,7 +1,7 @@
 /*
 ||
 || @file finite-state-machine.h
-|| @version 1.8
+|| @version 1.8.0
 || @original author Alexander Brevig
 || @contact alexanderbrevig@gmail.com
 || @Ported to Particle by Gustavo Gonnet
@@ -29,10 +29,8 @@
 ||
 */
 
-#ifndef FINITESTATEMACHINE_H
-#define FINITESTATEMACHINE_H
-
-#include <application.h>
+#ifndef _FINITE_STATE_MACHINE
+#define _FINITE_STATE_MACHINE
 
 #define NO_ENTER (0)
 #define NO_UPDATE (0)
@@ -40,50 +38,56 @@
 
 #define FSM FiniteStateMachine
 
-//define the functionality of the states
-class State {
-  public:
-    State( void (*updateFunction)() );
-    State( void (*enterFunction)(), void (*updateFunction)(), void (*exitFunction)() );
-    //State( byte newId, void (*enterFunction)(), void (*updateFunction)(), void (*exitFunction)() );
-    
-    //void getId();
-    void enter();
-    void update();
-    void exit();
-  private:
-    //byte id;
-    void (*userEnter)();
-    void (*userUpdate)();
-    void (*userExit)();
-};
+#include "application.h"
 
-//define the finite state machine functionality
-class FiniteStateMachine {
-  public:
-    FiniteStateMachine(State& current);
+namespace FiniteStateMachine
+{
+
+  //define the functionality of the states
+  class State {
+    public:
+      State( void (*updateFunction)() );
+      State( void (*enterFunction)(), void (*updateFunction)(), void (*exitFunction)() );
+      //State( byte newId, void (*enterFunction)(), void (*updateFunction)(), void (*exitFunction)() );
     
-    FiniteStateMachine& update();
-    FiniteStateMachine& transitionTo( State& state );
-    FiniteStateMachine& immediateTransitionTo( State& state );
+      //void getId();
+      void enter();
+      void update();
+      void exit();
+    private:
+      //byte id;
+      void (*userEnter)();
+      void (*userUpdate)();
+      void (*userExit)();
+  };
+
+  //define the finite state machine functionality
+  class FiniteStateMachine {
+    public:
+      FiniteStateMachine(State& current);
     
-    State& getCurrentState();
-    boolean isInState( State &state ) const;
+      FiniteStateMachine& update();
+      FiniteStateMachine& transitionTo( State& state );
+      FiniteStateMachine& immediateTransitionTo( State& state );
     
-    unsigned long timeInCurrentState();
+      State& getCurrentState();
+      boolean isInState( State &state ) const;
     
-  private:
-    bool   needToTriggerEnter;
-    State*   currentState;
-    State*   nextState;
-    unsigned long stateChangeTime;
-};
+      unsigned long timeInCurrentState();
+    
+    private:
+      bool   needToTriggerEnter;
+      State*   currentState;
+      State*   nextState;
+      unsigned long stateChangeTime;
+  };
+}
 
 #endif
 
 /*
 || @changelog
-|| | 1.8 2016-01-07- Gustavo Gonnet : Ported to Particle
+|| | 1.8.0 2016-01-07- Gustavo Gonnet : Ported to Particle
 || | 1.7 2010-03-08- Alexander Brevig : Fixed a bug, constructor ran update, thanks to René Pressé
 || | 1.6 2010-03-08- Alexander Brevig : Added timeInCurrentState() , requested by sendhb
 || | 1.5 2009-11-29- Alexander Brevig : Fixed a bug, introduced by the below fix, thanks to Jon Hylands again...
