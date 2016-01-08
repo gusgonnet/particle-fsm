@@ -118,6 +118,6 @@ boolean FiniteStateMachine::isInState( State &state ) const {
 }
 
 unsigned long FiniteStateMachine::timeInCurrentState() { 
-  millis() - stateChangeTime; 
+  return millis() - stateChangeTime; 
 }
 //END FINITE STATE MACHINE
