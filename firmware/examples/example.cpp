@@ -1,4 +1,4 @@
-#include "finite-state-machine/finite-state-machine.h"
+#include "FiniteStateMachine/FiniteStateMachine.h"
 
 // TODO
 // in the meantime, check the example here: http://playground.arduino.cc/Code/FiniteStateMachine#Example
