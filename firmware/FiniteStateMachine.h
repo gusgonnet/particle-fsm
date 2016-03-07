@@ -1,7 +1,7 @@
 /*
 ||
 || @file FiniteStateMachine.h
-|| @version 1.8.0
+|| @version 1.8.1
 || @original author Alexander Brevig
 || @contact alexanderbrevig@gmail.com
 || @Ported to Particle by Gustavo Gonnet
@@ -9,6 +9,20 @@
 ||
 || @description
 || | Provide an easy way of making finite state machines
+|| #
+||
+|| @changelog
+|| | 1.8.1 2016-01-07- Gustavo Gonnet : Pull request from Julien Vanier
+|| | 1.8.0 2016-01-07- Gustavo Gonnet : Ported to Particle
+|| | 1.7 2010-03-08- Alexander Brevig : Fixed a bug, constructor ran update, thanks to Ren? Press?
+|| | 1.6 2010-03-08- Alexander Brevig : Added timeInCurrentState() , requested by sendhb
+|| | 1.5 2009-11-29- Alexander Brevig : Fixed a bug, introduced by the below fix, thanks to Jon Hylands again...
+|| | 1.4 2009-11-29- Alexander Brevig : Fixed a bug, enter gets triggered on the first state. Big thanks to Jon Hylands who pointed this out.
+|| | 1.3 2009-11-01 - Alexander Brevig : Added getCurrentState : &State
+|| | 1.3 2009-11-01 - Alexander Brevig : Added isInState : boolean, requested by Henry Herman
+|| | 1.2 2009-05-18 - Alexander Brevig : enter and exit bug fix
+|| | 1.1 2009-05-18 - Alexander Brevig : Added support for cascaded calls
+|| | 1.0 2009-04-13 - Alexander Brevig : Initial Release
 || #
 ||
 || @license
@@ -97,18 +111,3 @@ class FiniteStateMachine {
 };
 
 #endif
-
-/*
-|| @changelog
-|| | 1.8.0 2016-01-07- Gustavo Gonnet : Ported to Particle
-|| | 1.7 2010-03-08- Alexander Brevig : Fixed a bug, constructor ran update, thanks to Ren? Press?
-|| | 1.6 2010-03-08- Alexander Brevig : Added timeInCurrentState() , requested by sendhb
-|| | 1.5 2009-11-29- Alexander Brevig : Fixed a bug, introduced by the below fix, thanks to Jon Hylands again...
-|| | 1.4 2009-11-29- Alexander Brevig : Fixed a bug, enter gets triggered on the first state. Big thanks to Jon Hylands who pointed this out.
-|| | 1.3 2009-11-01 - Alexander Brevig : Added getCurrentState : &State
-|| | 1.3 2009-11-01 - Alexander Brevig : Added isInState : boolean, requested by Henry Herman
-|| | 1.2 2009-05-18 - Alexander Brevig : enter and exit bug fix
-|| | 1.1 2009-05-18 - Alexander Brevig : Added support for cascaded calls
-|| | 1.0 2009-04-13 - Alexander Brevig : Initial Release
-|| #
-*/
