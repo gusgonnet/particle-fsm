@@ -13,6 +13,7 @@ A FSM serves as a manager that organizes a set of states, or behaviors.
 It manages the transition between states, and the state itself.
 The transitions might be caused by the user, a wall or something other that is external, and they might be caused by some internal logic. Transitions either happen immediately, or they are deferred to the next update. The latter is the most common. It's used because that way you'll know that all code related to the current state, will have executed on the same state.
 
+You can read more about finite state machines in this [write-up](https://www.hackster.io/gusgonnet/using-finite-state-machines-fdba04).
 
 # FSM Library Description
 
@@ -158,3 +159,8 @@ void loop()
 }
 
 ```
+
+---
+# Real implementations
+
+You can refer to this [pool and sauna controller](https://www.hackster.io/gusgonnet/pool-and-sauna-controller-b24a9a?team=34278) for a real world example.
