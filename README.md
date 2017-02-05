@@ -107,55 +107,54 @@ The states describe themselves:
 ![alt text](https://github.com/gusgonnet/particle-fsm/blob/master/images/LED_FSM.png)
 
 
-We will use external transitions, caused by a user and their button presses.
+Every 5 seconds the FSM will advance to the next State in the diagram above.
 
-Each button will cause the FSM to advance to the next State in the diagram above.
-
-This translates into this code:
+This FSM translates into this sketch:
 
 ```
-//http://playground.arduino.cc/uploads/Code/FSM.zip
 #include <FiniteStateMachine.h>
-//http://playground.arduino.cc/uploads/Code/Button.zip
-#include <Button.h>
-//http://playground.arduino.cc/uploads/Code/LED.zip
-#include <LED.h>
+
+//how many states are we cycling through?
+const byte NUMBER_OF_STATES = 4;
+
+//utility functions
+void ledOn() { /*action to turn the led on*/ }
+void ledOff() { /*action to turn the led off*/ }
+void ledFadeIn() { /*action to fade in the led*/ }
+void ledFadeOut() { /*action to fade out the led*/ }
+//end utility functions
  
-const byte NUMBER_OF_STATES = 4; //how many states are we cycling through?
- 
-//initialize states
+// initialize states
 State On = State(ledOn);
 State Off = State(ledOff);
 State FadeIn = State(ledFadeIn);
 State FadeOut = State(ledFadeOut);
  
-FSM ledStateMachine = FSM(On);     //initialize state machine, start in state: On
+// initialize state machine, start in state: On
+FSM ledStateMachine = FSM(On);
  
-Button button = Button(12,PULLUP); //initialize the button (wire between pin 12 and ground)
-LED led = LED(11);                 //initialize the LED
-byte buttonPresses = 0;            //counter variable, hols number of button presses
+// counter variable
+byte counter = 0;
+
+void setup()
+{ /* nothing to setup */ }
  
-void setup(){ /*nothing to setup*/ }
- 
-//poor example, but then again; it's just an example
-void loop(){
-  if (button.uniquePress()){
-    //increment buttonPresses and constrain it to [ 0, 1, 2, 3 ]
-    buttonPresses = ++buttonPresses % NUMBER_OF_STATES;
-    switch (buttonPresses){
-      case 0: ledStateMachine.transitionTo(On); break;
-      case 1: ledStateMachine.transitionTo(Off); break;
-      case 2: ledStateMachine.transitionTo(FadeIn); break;
-      case 3: ledStateMachine.transitionTo(FadeOut); break;
-    }
+void loop()
+{
+  // increment counter and constrain it to [ 0, 1, 2, 3 ]
+  counter = ++counter % NUMBER_OF_STATES;
+  switch (counter){
+    case 0: ledStateMachine.transitionTo(On); break;
+    case 1: ledStateMachine.transitionTo(Off); break;
+    case 2: ledStateMachine.transitionTo(FadeIn); break;
+    case 3: ledStateMachine.transitionTo(FadeOut); break;
   }
-  ledStateMachine.update();
-}
  
-//utility functions
-void ledOn(){ led.on(); }
-void ledOff(){ led.off(); }
-void ledFadeIn(){ led.fadeIn(500); }
-void ledFadeOut(){ led.fadeOut(500); }
-//end utility functions
+  ledStateMachine.update();
+
+  // advance to next state every 5 seconds
+  delay(5000);
+
+}
+
 ```
