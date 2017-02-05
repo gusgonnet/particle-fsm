@@ -161,6 +161,6 @@ void loop()
 ```
 
 ---
-# Real implementations
+# Real-world implementations
 
-You can refer to this [pool and sauna controller](https://www.hackster.io/gusgonnet/pool-and-sauna-controller-b24a9a?team=34278) for a real world example.
+You can refer to this [pool and sauna controller](https://www.hackster.io/gusgonnet/pool-and-sauna-controller-b24a9a?team=34278).
