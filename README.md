@@ -6,6 +6,8 @@ Ported from the [Arduino Finite State Machine library](http://playground.arduino
 
 All credit goes to the original author: [Alexander Brevig](alexanderbrevig@gmail.com).
 
+Why FSMs? [Please read this write-up](https://www.hackster.io/gusgonnet/using-finite-state-machines-fdba04)
+
 # Finite State Machine Description
 
 A FSM serves as a manager that organizes a set of states, or behaviors.
