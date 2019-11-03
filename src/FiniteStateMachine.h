@@ -1,7 +1,7 @@
 /*
 ||
 || @file FiniteStateMachine.h
-|| @version 1.8.1
+|| @version 1.9.0
 || @original author Alexander Brevig
 || @contact alexanderbrevig@gmail.com
 || @Ported to Particle by Gustavo Gonnet
@@ -12,6 +12,7 @@
 || #
 ||
 || @changelog
+|| | 1.9.0 2019-11-03- Julien Vanier : Add strongly typed variant
 || | 1.8.1 2016-01-07- Gustavo Gonnet : Pull request from Julien Vanier
 || | 1.8.0 2016-01-07- Gustavo Gonnet : Ported to Particle
 || | 1.7 2010-03-08- Alexander Brevig : Fixed a bug, constructor ran update, thanks to Ren? Press?
@@ -108,6 +109,51 @@ class FiniteStateMachine {
 		State* 	currentState;
 		State* 	nextState;
 		unsigned long stateChangeTime;
+};
+
+// Strongly typed variant
+
+#define DECLARE_STATE(StateT) \
+	class StateT : public State { \
+		public: \
+			StateT( void (*updateFunction)() ) \
+				: State(updateFunction) {} \
+			StateT( void (*enterFunction)(), void (*updateFunction)(), void (*exitFunction)() ) \
+				: State(enterFunction, updateFunction, exitFunction) {} \
+	}
+
+
+#define FSMT FiniteStateMachineTyped
+
+template <class StateT>
+class FiniteStateMachineTyped {
+	public:
+		FiniteStateMachineTyped(StateT& current)
+			: stateMachine(current) {}
+
+		FiniteStateMachineTyped& update() {
+			return (FiniteStateMachineTyped&)stateMachine.update();
+		}
+		FiniteStateMachineTyped& transitionTo( StateT& state ) {
+			return (FiniteStateMachineTyped&)stateMachine.transitionTo(state);
+		}
+		FiniteStateMachineTyped& immediateTransitionTo( StateT& state ) {
+			return (FiniteStateMachineTyped&)stateMachine.immediateTransitionTo(state);
+		}
+
+		StateT& getCurrentState() {
+			return (StateT&)stateMachine.getCurrentState();
+		}
+		boolean isInState( StateT &state ) const {
+			return stateMachine.isInState(state);
+		}
+
+		unsigned long timeInCurrentState() {
+			return stateMachine.timeInCurrentState();
+		}
+
+	private:
+		FiniteStateMachine stateMachine;
 };
 
 #endif
