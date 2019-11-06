@@ -1,7 +1,7 @@
 /*
 ||
 || @file FiniteStateMachine.cpp
-|| @version 1.8
+|| @version 1.9
 || @original author Alexander Brevig
 || @contact alexanderbrevig@gmail.com
 || @Ported to Particle by Gustavo Gonnet
